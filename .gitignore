@@ -1,2 +1,4 @@
 #Ignore all files in the _pycache_ directory
-/_pycache/
+## Python ###
+# Byte-compiled / optimized / DLL files
+__pycache__/

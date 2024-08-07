@@ -1,29 +1,24 @@
-from save import save_to_file
+# File: functions/generate_experience.py
 
-
-def generate_experience_levels(num_levels, base_xp, multiplier, player_enabled, wild_dino_enabled, tamed_dino_enabled):
+def generate_experience_levels(num_levels, base_xp, multiplier, experience_type):
     experience_points_players = [0]
-    experience_points_dinos = [0]
     experience_points_tamed_dinos = [0]
 
     for level in range(1, num_levels + 1):
         xp_player = base_xp * (level ** multiplier)
-        xp_dino = (base_xp / 1.5) * (level ** multiplier)
         xp_tamed_dino = (base_xp / 2) * (level ** multiplier)
-        
+
         experience_points_players.append(int(xp_player))
-        experience_points_dinos.append(int(xp_dino))
         experience_points_tamed_dinos.append(int(xp_tamed_dino))
 
     result = "[/script/shootergame.shootergamemode]\n"
-    if player_enabled:
+    if experience_type == "joueurs_dinos":
         result += generate_section("LevelExperienceRampOverrides", experience_points_players)
-    if wild_dino_enabled:
-        result += generate_section("LevelExperienceRampOverrides", experience_points_dinos)
-    if tamed_dino_enabled:
         result += generate_section("LevelExperienceRampOverrides", experience_points_tamed_dinos)
+    elif experience_type == "joueurs":
+        result += generate_section("LevelExperienceRampOverrides", experience_points_players)
 
-    save_to_file(result)
+    return result
 
 def generate_section(section_name, experience_points):
     section = f"{section_name}=(ExperiencePointsForLevel[0]={experience_points[0]}"
