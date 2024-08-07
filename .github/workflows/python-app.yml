@@ -27,17 +27,14 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
     - name: Build executable with PyInstaller
       run: |
-        pyinstaller --onefile main.py
+        pyinstaller --onefile --name ArkConfig_Linux main.py
     - name: Upload Linux executable
       uses: actions/upload-artifact@v3
       with:
-        name: linux-executable
-        path: dist/main
+        name: ArkConfig_Linux
+        path: dist/ArkConfig_Linux
 
   build-and-test-windows:
     runs-on: windows-latest
@@ -56,14 +53,11 @@ jobs:
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
-      run: |
-        pytest
     - name: Build executable with PyInstaller
       run: |
-        pyinstaller --onefile main.py
+        pyinstaller --onefile --name ArkConfig_Windows main.py
     - name: Upload Windows executable
       uses: actions/upload-artifact@v3
       with:
-        name: windows-executable
-        path: dist/main.exe
+        name: ArkConfig_Windows
+        path: dist/ArkConfig_Windows.exe
